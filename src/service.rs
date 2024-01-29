@@ -1,19 +1,25 @@
 use std::task::{Context, Poll};
 use tower_service::Service;
+use crate::gate::AuthGate;
 
-pub struct AuthService<S> {
-    inner: S
+pub struct AuthService<S, T> {
+    inner: S,
+    gate: T,
 }
 
-impl<S> AuthService<S> {
-    pub(crate) fn new(inner: S) -> Self {
+impl<S, T> AuthService<S, T> {
+    pub(crate) fn new(inner: S, gate: T) -> Self {
         Self {
-            inner
+            inner,
+            gate,
         }
     }
 }
 
-impl<S> Service<S> for AuthService<S> {
+impl<S, T> Service<S> for AuthService<S, T>
+where
+    T: AuthGate
+{
     type Response = ();
     type Error = ();
     type Future = ();
