@@ -17,8 +17,8 @@ impl<S, T> AuthService<S, T> {
 }
 
 impl<S, T> Service<S> for AuthService<S, T>
-where
-    T: AuthGate
+    where
+        T: AuthGate
 {
     type Response = ();
     type Error = ();

@@ -14,8 +14,8 @@ impl<T> AuthLayer<T> {
 }
 
 impl<S, T> Layer<S> for AuthLayer<T>
-where
-    T: Clone,
+    where
+        T: Clone,
 {
     type Service = AuthService<S, T>;
 
